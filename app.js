@@ -36,15 +36,17 @@ io.on("connection" , function(uniquesocket){
         uniquesocket.emit(" playerRole" ,"b")
     }
     else{
-        uniquesocket.emit("spectatorRole" ,)
+        uniquesocket.emit("spectatorRole" )
     }
 
     uniquesocket.on("disconnect" , function(){
         if(uniquesocket.id === player.white){
             delete player.white;
+            console.log("White player disconnected.");
         }
         else if(uniquesocket.id === player.black){
             delete player.black
+            console.log("Black player diconnected");
         }
     });
     uniquesocket.on("move" ,(move)=>{
@@ -59,12 +61,12 @@ io.on("connection" , function(uniquesocket){
                 io.emit("boardState" , chess.fen())
             }
             else{
-                console.log("Invalid move : " , move);
+                console.log("invalid move : " , move);
                 uniquesocket.emit("invalidMove",move)// just for user now for everyone thats y uniquesocket 
             }//51
         } catch (error) {
             console.log(error);
-            uniquesocket.emit("Invalid move : ", move)
+            uniquesocket.emit("invalid move", move)
              
         }
 
